@@ -32,8 +32,9 @@ const (
 type TaskHTTPMethod int8
 
 const (
-	TaskHTTPMethodGet  TaskHTTPMethod = 1
-	TaskHttpMethodPost TaskHTTPMethod = 2
+	TaskHTTPMethodGet      TaskHTTPMethod = 1
+	TaskHttpMethodPost     TaskHTTPMethod = 2
+	TaskHttpMethodOriginal TaskHTTPMethod = 3 // 原始
 )
 
 // 任务

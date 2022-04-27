@@ -220,9 +220,11 @@ func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result str
 		taskModel.Timeout = HttpExecTimeout
 	}
 	var resp httpclient.ResponseWrapper
-	if taskModel.HttpMethod == models.TaskHTTPMethodGet {
+	// 根据http类型执行
+	switch taskModel.HttpMethod {
+	case models.TaskHTTPMethodGet:
 		resp = httpclient.Get(taskModel.Command, taskModel.Timeout)
-	} else {
+	case models.TaskHttpMethodPost:
 		urlFields := strings.Split(taskModel.Command, "?")
 		taskModel.Command = urlFields[0]
 		var params string
@@ -230,12 +232,17 @@ func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result str
 			params = urlFields[1]
 		}
 		resp = httpclient.PostParams(taskModel.Command, params, taskModel.Timeout)
+	case models.TaskHttpMethodOriginal:
+		myRequest, err := httpclient.ParseRequest(taskModel.Command)
+		if err != nil {
+			return ``, fmt.Errorf(`初始化请求失败：%v`, err)
+		}
+		resp = httpclient.Request(myRequest, taskModel.Timeout)
 	}
 	// 返回状态码非200，均为失败
 	if resp.StatusCode != http.StatusOK {
 		return resp.Body, fmt.Errorf("HTTP状态码非200-->%d", resp.StatusCode)
 	}
-
 	return resp.Body, err
 }
 
