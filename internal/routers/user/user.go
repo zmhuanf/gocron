@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/ouqiang/gocron/internal/models"
-	"github.com/ouqiang/gocron/internal/modules/app"
-	"github.com/ouqiang/gocron/internal/modules/logger"
-	"github.com/ouqiang/gocron/internal/modules/utils"
-	"github.com/ouqiang/gocron/internal/routers/base"
+	"github.com/zmhuanf/gocron/internal/models"
+	"github.com/zmhuanf/gocron/internal/modules/app"
+	"github.com/zmhuanf/gocron/internal/modules/logger"
+	"github.com/zmhuanf/gocron/internal/modules/utils"
+	"github.com/zmhuanf/gocron/internal/routers/base"
 	"gopkg.in/macaron.v1"
 )
 

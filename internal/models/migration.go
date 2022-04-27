@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/go-xorm/xorm"
-	"github.com/ouqiang/gocron/internal/modules/logger"
+	"github.com/zmhuanf/gocron/internal/modules/logger"
 )
 
 type Migration struct{}

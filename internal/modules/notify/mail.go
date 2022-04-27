@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/go-gomail/gomail"
-	"github.com/ouqiang/gocron/internal/models"
-	"github.com/ouqiang/gocron/internal/modules/logger"
-	"github.com/ouqiang/gocron/internal/modules/utils"
+	"github.com/zmhuanf/gocron/internal/models"
+	"github.com/zmhuanf/gocron/internal/modules/logger"
+	"github.com/zmhuanf/gocron/internal/modules/utils"
 )
 
 // @author qiang.ou<qingqianludao@gmail.com>
