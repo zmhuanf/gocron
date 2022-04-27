@@ -315,6 +315,10 @@ export default {
         {
           value: 2,
           label: 'post'
+        },
+        {
+          value: 3,
+          label: '原始'
         }
       ],
       protocolList: [

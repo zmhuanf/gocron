@@ -128,10 +128,10 @@ func Store(ctx *macaron.Context, form TaskForm) string {
 	}
 	taskModel.HttpMethod = form.HttpMethod
 	if taskModel.Protocol == models.TaskHTTP {
-		command := strings.ToLower(taskModel.Command)
-		if !strings.HasPrefix(command, "http://") && !strings.HasPrefix(command, "https://") {
-			return json.CommonFailure("请输入正确的URL地址")
-		}
+		//command := strings.ToLower(taskModel.Command)
+		//if !strings.HasPrefix(command, "http://") && !strings.HasPrefix(command, "https://") {
+		//	return json.CommonFailure("请输入正确的URL地址")
+		//}
 		if taskModel.Timeout > 300 {
 			return json.CommonFailure("HTTP任务超时时间不能超过300秒")
 		}
