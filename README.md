@@ -1,3 +1,59 @@
+# 修改说明
+* 在http任务中添加了“原始”类型，其支持以下两种格式
+
+1.直接从浏览器复制
+```
+:authority: cm.bilibili.com
+:method: POST
+:path: /cm/api/fees/pc
+:scheme: https
+accept: application/json
+accept-encoding: gzip, deflate, br
+accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+cache-control: no-cache
+content-length: 318
+content-type: application/json
+cookie: i-wanna-go-back=-1; 
+origin: https://www.bilibili.com
+pragma: no-cache
+referer: https://www.bilibili.com/
+sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="100", "Microsoft Edge";v="100"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+sec-fetch-dest: empty
+sec-fetch-mode: cors
+sec-fetch-site: same-site
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.50
+```
+2.原始内容，注意此种方式需要手动将地址补全，如下所示
+```
+GET https://www.baidu.com/?tn=62095104_43_oem_dg HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cache-Control: max-age=0
+Connection: keep-alive
+Cookie: BD_HOME=1;
+Host: www.baidu.com
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: none
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36
+sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="100", "Google Chrome";v="100"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+```
+*使用“原始”类型时，可以使用以下变量
+```
+{now}      将被替换成当前时间戳（秒）
+{now_mill} 将被替换成当前时间戳（毫秒）
+{now_nano} 将被替换成当前时间戳（纳秒）
+```
+
+# 以下为原文档readme内容
+
 # gocron - 定时任务管理系统
 [![Downloads](https://img.shields.io/github/downloads/ouqiang/gocron/total.svg)](https://github.com/ouqiang/gocron/releases)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ouqiang/gocron/blob/master/LICENSE)
