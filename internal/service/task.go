@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -235,7 +236,8 @@ func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result str
 	case models.TaskHttpMethodOriginal:
 		myRequest, err := httpclient.ParseRequest(taskModel.Command)
 		if err != nil {
-			return ``, fmt.Errorf(`初始化请求失败：%v`, err)
+			msg := fmt.Sprintf(`初始化请求失败：%v`, err)
+			return msg, errors.New(msg)
 		}
 		resp = httpclient.Request(myRequest, taskModel.Timeout)
 	}

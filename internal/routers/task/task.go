@@ -24,8 +24,8 @@ type TaskForm struct {
 	Name             string `binding:"Required;MaxSize(32)"`
 	Spec             string
 	Protocol         models.TaskProtocol   `binding:"In(1,2)"`
-	Command          string                `binding:"Required;MaxSize(256)"`
-	HttpMethod       models.TaskHTTPMethod `binding:"In(1,2)"`
+	Command          string                `binding:"Required"`
+	HttpMethod       models.TaskHTTPMethod `binding:"In(1,2,3)"`
 	Timeout          int                   `binding:"Range(0,86400)"`
 	Multi            int8                  `binding:"In(1,2)"`
 	RetryTimes       int8

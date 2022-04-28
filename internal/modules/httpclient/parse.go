@@ -3,6 +3,7 @@ package httpclient
 import (
 	"bufio"
 	"fmt"
+	"github.com/zmhuanf/gocron/internal/modules/logger"
 	"io"
 	"net/http"
 	"strconv"
@@ -44,6 +45,7 @@ func ParseRequest(data string) (*http.Request, error) {
 		if err != nil || err == io.EOF {
 			break
 		}
+		line = strings.ReplaceAll(line, "\n", ``)
 		if index == 1 && line[0] == ':' {
 			originalCategory = EDGE
 		}
@@ -108,6 +110,12 @@ func ParseRequest(data string) (*http.Request, error) {
 	for k, v := range headers {
 		myRequest.Header.Set(k, v)
 	}
+	logger.Debug(`======解析request======`)
+	logger.Debug(`url = `, url)
+	logger.Debug(`method = `, method)
+	logger.Debug(fmt.Sprintf(`header = %+v`, headers))
+	logger.Debug(fmt.Sprintf(`request header = %+v`, myRequest.Header))
+	logger.Debug(`======      ======`)
 	return myRequest, nil
 }
 

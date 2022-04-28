@@ -39,3 +39,5 @@ profile/*
 
 node_modules
 vendor
+test
+/web/vue/package-lock.json
