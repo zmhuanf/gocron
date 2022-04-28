@@ -24,8 +24,8 @@ type TaskForm struct {
 	Name             string `binding:"Required;MaxSize(32)"`
 	Spec             string
 	Protocol         models.TaskProtocol   `binding:"In(1,2)"`
-	Command          string                `binding:"Required;MaxSize(256)"`
-	HttpMethod       models.TaskHTTPMethod `binding:"In(1,2)"`
+	Command          string                `binding:"Required"`
+	HttpMethod       models.TaskHTTPMethod `binding:"In(1,2,3)"`
 	Timeout          int                   `binding:"Range(0,86400)"`
 	Multi            int8                  `binding:"In(1,2)"`
 	RetryTimes       int8
@@ -128,10 +128,10 @@ func Store(ctx *macaron.Context, form TaskForm) string {
 	}
 	taskModel.HttpMethod = form.HttpMethod
 	if taskModel.Protocol == models.TaskHTTP {
-		command := strings.ToLower(taskModel.Command)
-		if !strings.HasPrefix(command, "http://") && !strings.HasPrefix(command, "https://") {
-			return json.CommonFailure("请输入正确的URL地址")
-		}
+		//command := strings.ToLower(taskModel.Command)
+		//if !strings.HasPrefix(command, "http://") && !strings.HasPrefix(command, "https://") {
+		//	return json.CommonFailure("请输入正确的URL地址")
+		//}
 		if taskModel.Timeout > 300 {
 			return json.CommonFailure("HTTP任务超时时间不能超过300秒")
 		}

@@ -22,7 +22,7 @@ func Get(url string, timeout int) ResponseWrapper {
 		return createRequestError(err)
 	}
 
-	return request(req, timeout)
+	return Request(req, timeout)
 }
 
 func PostParams(url string, params string, timeout int) ResponseWrapper {
@@ -33,7 +33,7 @@ func PostParams(url string, params string, timeout int) ResponseWrapper {
 	}
 	req.Header.Set("Content-type", "application/x-www-form-urlencoded")
 
-	return request(req, timeout)
+	return Request(req, timeout)
 }
 
 func PostJson(url string, body string, timeout int) ResponseWrapper {
@@ -44,16 +44,15 @@ func PostJson(url string, body string, timeout int) ResponseWrapper {
 	}
 	req.Header.Set("Content-type", "application/json")
 
-	return request(req, timeout)
+	return Request(req, timeout)
 }
 
-func request(req *http.Request, timeout int) ResponseWrapper {
+func Request(req *http.Request, timeout int) ResponseWrapper {
 	wrapper := ResponseWrapper{StatusCode: 0, Body: "", Header: make(http.Header)}
 	client := &http.Client{}
 	if timeout > 0 {
 		client.Timeout = time.Duration(timeout) * time.Second
 	}
-	setRequestHeader(req)
 	resp, err := client.Do(req)
 	if err != nil {
 		wrapper.Body = fmt.Sprintf("执行HTTP请求错误-%s", err.Error())

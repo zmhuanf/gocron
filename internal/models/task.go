@@ -32,8 +32,9 @@ const (
 type TaskHTTPMethod int8
 
 const (
-	TaskHTTPMethodGet  TaskHTTPMethod = 1
-	TaskHttpMethodPost TaskHTTPMethod = 2
+	TaskHTTPMethodGet      TaskHTTPMethod = 1
+	TaskHttpMethodPost     TaskHTTPMethod = 2
+	TaskHttpMethodOriginal TaskHTTPMethod = 3 // 原始
 )
 
 // 任务
@@ -45,7 +46,7 @@ type Task struct {
 	DependencyStatus TaskDependencyStatus `json:"dependency_status" xorm:"tinyint notnull default 1"`         // 依赖关系 1:强依赖 主任务执行成功, 依赖任务才会被执行 2:弱依赖
 	Spec             string               `json:"spec" xorm:"varchar(64) notnull"`                            // crontab
 	Protocol         TaskProtocol         `json:"protocol" xorm:"tinyint notnull index"`                      // 协议 1:http 2:系统命令
-	Command          string               `json:"command" xorm:"varchar(256) notnull"`                        // URL地址或shell命令
+	Command          string               `json:"command" xorm:"text notnull"`                                // URL地址或shell命令
 	HttpMethod       TaskHTTPMethod       `json:"http_method" xorm:"tinyint notnull default 1"`               // http请求方法
 	Timeout          int                  `json:"timeout" xorm:"mediumint notnull default 0"`                 // 任务执行超时时间(单位秒),0不限制
 	Multi            int8                 `json:"multi" xorm:"tinyint notnull default 1"`                     // 是否允许多实例运行
