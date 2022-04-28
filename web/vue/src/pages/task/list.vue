@@ -278,7 +278,10 @@ export default {
       if (row.http_method === 1) {
         return 'http-get'
       }
-      return 'http-post'
+      if (row.http_method === 2) {
+        return 'http-post'
+      }
+      return 'http-原始'
     },
     changePage (page) {
       this.searchParams.page = page
