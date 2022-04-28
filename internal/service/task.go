@@ -241,6 +241,7 @@ func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result str
 		}
 		resp = httpclient.Request(myRequest, taskModel.Timeout)
 	}
+	logger.Debug(fmt.Sprintf(`请求返回：%+v`, resp))
 	// 返回状态码非200，均为失败
 	if resp.StatusCode != http.StatusOK {
 		return resp.Body, fmt.Errorf("HTTP状态码非200-->%d", resp.StatusCode)
