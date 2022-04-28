@@ -46,7 +46,7 @@ func ParseRequest(data string) (*http.Request, error) {
 			break
 		}
 		line = strings.ReplaceAll(line, "\n", ``)
-		if index == 1 && line[0] == ':' {
+		if index == 1 && strings.HasPrefix(line, `:`) {
 			originalCategory = EDGE
 		}
 		switch originalCategory {
@@ -64,9 +64,8 @@ func ParseRequest(data string) (*http.Request, error) {
 				method = words[0]
 				url = words[1]
 			case Header:
-				words := strings.Split(line, `:`)
-				// 从EDGE复制出来带一个空格，这里去掉
-				headers[words[0]] = words[1][1:]
+				words := strings.Split(line, `: `)
+				headers[words[0]] = strings.Join(words[1:], `: `)
 			case Body:
 				body += line + "\n"
 			}
@@ -75,29 +74,24 @@ func ParseRequest(data string) (*http.Request, error) {
 				lineCategory = Body
 				continue
 			}
-			words := strings.Split(line, `:`)
-			if len(words) == 2 {
+			if lineCategory == Url && !strings.HasPrefix(line, `:`) {
 				lineCategory = Header
 			}
+			words := strings.Split(line, `: `)
 			switch lineCategory {
 			case Url:
-				switch words[1] {
-				case `authority`:
-					// 从EDGE复制出来带一个空格，这里去掉
-					url = words[2][1:]
-				case `method`:
-					// 从EDGE复制出来带一个空格，这里去掉
-					method = words[2][1:]
-				case `path`:
-					// 从EDGE复制出来带一个空格，这里去掉
-					url = url + words[2][1:]
-				case `scheme`:
-					// 从EDGE复制出来带一个空格，这里去掉
-					url = fmt.Sprintf(`%v://%v`, words[2][1:], url)
+				switch words[0] {
+				case `:authority`:
+					url = strings.Join(words[1:], `: `)
+				case `:method`:
+					method = strings.Join(words[1:], `: `)
+				case `:path`:
+					url = url + strings.Join(words[1:], `: `)
+				case `:scheme`:
+					url = fmt.Sprintf(`%v://%v`, strings.Join(words[1:], `: `), url)
 				}
 			case Header:
-				// 从EDGE复制出来带一个空格，这里去掉
-				headers[words[0]] = words[1][1:]
+				headers[words[0]] = strings.Join(words[1:], `: `)
 			case Body:
 				body += line + "\n"
 			}
