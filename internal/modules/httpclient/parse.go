@@ -32,9 +32,10 @@ const (
 func ParseRequest(data string) (*http.Request, error) {
 	method := ``
 	url := ``
-	body := ``
+	body := make([]string, 0)
 	headers := make(map[string]string)
 	data = SubstitutionVariables(data)
+	data = data + "\n"
 	reader := bufio.NewReader(strings.NewReader(data))
 	originalCategory := Original
 	lineCategory := Url
@@ -67,7 +68,7 @@ func ParseRequest(data string) (*http.Request, error) {
 				words := strings.Split(line, `: `)
 				headers[words[0]] = strings.Join(words[1:], `: `)
 			case Body:
-				body += line + "\n"
+				body = append(body, line)
 			}
 		case EDGE:
 			if line == `` {
@@ -93,11 +94,11 @@ func ParseRequest(data string) (*http.Request, error) {
 			case Header:
 				headers[words[0]] = strings.Join(words[1:], `: `)
 			case Body:
-				body += line + "\n"
+				body = append(body, line)
 			}
 		}
 	}
-	myRequest, err := http.NewRequest(method, url, strings.NewReader(body))
+	myRequest, err := http.NewRequest(method, url, strings.NewReader(strings.Join(body, "\n")))
 	if err != nil {
 		return nil, err
 	}
@@ -107,6 +108,7 @@ func ParseRequest(data string) (*http.Request, error) {
 	logger.Debug(`======解析request======`)
 	logger.Debug(`url = `, url)
 	logger.Debug(`method = `, method)
+	logger.Debug(`body = `, body)
 	logger.Debug(fmt.Sprintf(`header = %+v`, headers))
 	logger.Debug(fmt.Sprintf(`request header = %+v`, myRequest.Header))
 	logger.Debug(`======      ======`)
