@@ -140,10 +140,10 @@
       </el-table>
       <el-dialog title="任务执行结果" :visible.sync="dialogVisible">
         <div>
-          <pre>{{currentTaskResult.command}}</pre>
+          <pre>{{currentTaskResult.result}}</pre>
         </div>
         <div>
-          <pre>{{currentTaskResult.result}}</pre>
+          <pre>{{currentTaskResult.command}}</pre>
         </div>
       </el-dialog>
     </el-main>
