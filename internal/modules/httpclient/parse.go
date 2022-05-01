@@ -56,7 +56,7 @@ func ParseRequest(data string) (*http.Request, error) {
 				lineCategory = Body
 				continue
 			}
-			if index != 1 {
+			if lineCategory == Url && index != 1 {
 				lineCategory = Header
 			}
 			switch lineCategory {
