@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -105,4 +106,13 @@ func FileExist(file string) bool {
 	}
 
 	return true
+}
+
+// DecodeUnicode Unicode解码
+func DecodeUnicode(data string) (string, error) {
+	result, err := strconv.Unquote(strings.ReplaceAll(strconv.Quote(data), `\\u`, `\u`))
+	if err != nil {
+		return ``, err
+	}
+	return result, nil
 }

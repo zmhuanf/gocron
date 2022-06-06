@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"github.com/zmhuanf/gocron/internal/modules/utils"
 	"net/http"
 	"strconv"
 	"strings"
@@ -242,11 +243,16 @@ func (h *HTTPHandler) Run(taskModel models.Task, taskUniqueId int64) (result str
 		resp = httpclient.Request(myRequest, taskModel.Timeout)
 	}
 	logger.Debug(fmt.Sprintf(`请求返回：%+v`, resp))
+	// Unicode解码
+	body, err := utils.DecodeUnicode(resp.Body)
+	if err != nil {
+		return resp.Body, fmt.Errorf(`unicode解码失败-->%v`, err)
+	}
 	// 返回状态码非200，均为失败
 	if resp.StatusCode != http.StatusOK {
-		return resp.Body, fmt.Errorf("HTTP状态码非200-->%d", resp.StatusCode)
+		return body, fmt.Errorf(`HTTP状态码非200-->%d`, resp.StatusCode)
 	}
-	return resp.Body, err
+	return body, err
 }
 
 // RPC调用执行任务
