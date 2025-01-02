@@ -25,9 +25,8 @@ require (
 	github.com/rakyll/statik v0.1.7
 	github.com/sirupsen/logrus v1.4.2
 	github.com/urfave/cli v1.20.0
-	golang.org/x/crypto v0.0.0-20190530122614-20be4c3c3ed5 // indirect
-	golang.org/x/net v0.0.0-20190522155817-f3200d17e092
-	golang.org/x/text v0.3.2 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/net v0.25.0
 	google.golang.org/genproto v0.0.0-20190530194941-fb225487d101 // indirect
 	google.golang.org/grpc v1.21.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
